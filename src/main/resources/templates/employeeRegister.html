@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<title>Employee Registration Form</title>
+</head>
+<body>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-6">
+				<form action="/employee/save" method="POST" th:object="${employee}">
+					<h3 class="bg-primary text-white p-2 text-center">Employee Registration Form</h3>
+					<table class="table table-bordered">
+						<tr>
+							<td>Employee Name</td>
+							<td><input type="text" th:field="*{name}" class="form-control" /></td>
+						</tr>
+						<tr>
+							<td>Employee Salary</td>
+							<td><input type="text" th:field="*{salary}"	class="form-control" /></td>
+						</tr>
+						<tr>
+							<td>Captcha</td>
+							<td><img th:src="*{'data:image/png;base64,'+captchaData}" /></td>
+						</tr>
+						<tr>
+							<td>Enter Answer</td>
+							<td><input type="text" th:field="*{userAnswer}" class="form-control" /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><input type="submit" value="Save" class="btn btn-success" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="col-6">
+				<h3 class="bg-primary text-white p-2 text-center">All Employee Displayed Here</h3>
+				<table class="table text-center table-hover">
+					<thead class="bg-success text-white">
+						<tr>
+							<th>ID</th>
+							<th>NAME</th>
+							<th>SALARY</th>
+							<th>OPERATION</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="emp : ${list}">
+							<td th:text="${emp.id}"></td>
+							<td th:text="${emp.name}"></td>
+							<td th:text="${emp.salary}"></td>
+							<td>
+								<a th:href="@{/employee/delete?id={id}(id=${emp.id})}" class="btn btn-danger">DELETE</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
